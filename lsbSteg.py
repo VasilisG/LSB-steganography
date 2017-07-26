@@ -5,7 +5,7 @@ from PIL import Image
 ############################################################################
 
 
-#Function that takes the elements of a list and adds them on a string (CORRECT)
+#Function that takes the elements of a list and adds them on a string.
 
 def _placeElementsToString(inList):
 
@@ -30,7 +30,7 @@ def _placeElementsToString(inList):
 
 
 
-#Function that converts a string to ascii and stores the result in a list. (CORRECT)
+#Function that converts a string to ascii and stores the result in a list.
 
 def _toAscii(strText):
 
@@ -44,7 +44,7 @@ def _toAscii(strText):
 
 
 
-#Function that converts ascii to binary and stores the result as a list. (CORRECT)
+#Function that converts ascii to binary and stores the result as a list.
 
 def _toBinary(numberList):
 
@@ -85,7 +85,7 @@ def _toBinary(numberList):
 
 
 
-#Function that converts a binary number to decimal number. (CORRECT)
+#Function that converts a binary number to decimal number.
 
 def _binaryToDecimal(binaryList):
 
@@ -101,7 +101,7 @@ def _binaryToDecimal(binaryList):
     
 
 
-#Function that creates triple bit pairs in order to make the insertion process easier. (CORRECT)
+#Function that creates triple bit pairs in order to make the insertion process easier.
 
 def _createTripleBitPairs(binaryList):
 
@@ -123,7 +123,7 @@ def _createTripleBitPairs(binaryList):
 ###########################################################################
 
 
-#Function that returns all pixels of an image in a list. (CORRECT)
+#Function that returns all pixels of an image in a list.
 
 def _getImagePixels(image):
 
@@ -131,7 +131,7 @@ def _getImagePixels(image):
 
 
 
-#Function that converts a pixel from RGB to binary. (CORRECT)
+#Function that converts a pixel from RGB to binary.
 
 def _rgbToBinary(pixel):
 
@@ -155,7 +155,7 @@ def _rgbToBinary(pixel):
 
 
 
-#Function that inserts the LSB in a binary pixel list and returns a new list. (CORRECT)
+#Function that inserts the LSB in a binary pixel list and returns a new list.
 
 def _insertBit(binaryPixelList, bit):
 
@@ -168,7 +168,7 @@ def _insertBit(binaryPixelList, bit):
 
 
 
-#Function that inserts all bits of input text in image's pixels and returns a list with the new pixels. (CORRECT)
+#Function that inserts all bits of input text in image's pixels and returns a list with the new pixels.
 
 def _insertBitsToPixels(binaryList, pixelList):
 
@@ -177,10 +177,6 @@ def _insertBitsToPixels(binaryList, pixelList):
 
         bin = list(binaryList[i])
         currentPixel = list(pixelList[i])
-
-        #print("Bin: ", bin)
-        #print("Current pixel: ", currentPixel)
-
 
         currentPixel[0] = _rgbToBinary(currentPixel[0])
         currentPixel[1] = _rgbToBinary(currentPixel[1])
@@ -196,13 +192,11 @@ def _insertBitsToPixels(binaryList, pixelList):
         currentPixel[1] = int(_binaryToDecimal(currentPixel[1]))
         currentPixel[2] = int(_binaryToDecimal(currentPixel[2]))
 
-        #print("Current pixel: ", currentPixel)
-
         pixelList[i] = currentPixel
 
 
 
-#Creates a pixel tuple in order to be compatible for saving the new image. (CORRECT)
+#Creates a pixel tuple in order to be compatible for saving the new image.
 
 def _createPixelTuple(pixelList):
 
@@ -217,7 +211,7 @@ def _createPixelTuple(pixelList):
 
 ######################################################################################
 
-#Function that gets the LSB from every R,G and B value of every pixel and creates a new list. (CORRECT)
+#Function that gets the LSB from every R,G and B value of every pixel and creates a new list.
 
 def _getLsbFromPixels(pixelList):
 
@@ -291,7 +285,7 @@ def _createOctets(lsbList):
 
 
 
-#Function that splits a string every 8 characters and returns a list of strings. (CORRECT)
+#Function that splits a string every 8 characters and returns a list of strings.
 
 def _splitString(inputString):
 
@@ -336,7 +330,7 @@ def _getMessage(binaryList):
 
 
 
-#Function that gets a message from a binary string list and returns a string. (CORRECT)
+#Function that gets a message from a binary string list and returns a string.
 
 def _getStringMessage(stringList):
 
@@ -355,7 +349,7 @@ def _getStringMessage(stringList):
 
 
 
-#Function that checks if the message can be embedded in the image. (CORRECT)
+#Function that checks if the message can be embedded in the image.
 
 def _canEmbed(message, image):
 
@@ -371,12 +365,11 @@ def _canEmbed(message, image):
 
 
 
-#Function that checks if a file is JPEG or PNG. (CORRECT)
+#Function that checks if a file is JPEG or PNG.
 
 def _isValidImageFile(imageNameString):
 
     tempString = imageNameString[-3:]
-    #print(tempString)
 
     if tempString == "jpg" or tempString == "png":
         return True
@@ -385,7 +378,7 @@ def _isValidImageFile(imageNameString):
 
 
 
- #Function that embeds a message in a JPG or a PNG image and return a new PNG image with the embedded message. (CORRECT)
+ #Function that embeds a message in a JPG or a PNG image and return a new PNG image with the embedded message.
 
 
 def embedMessage(imageNameString, stegoNameString, message):
@@ -430,15 +423,16 @@ def embedMessage(imageNameString, stegoNameString, message):
 
 
 
-#Function that extracts the message from a PNG image and returns the message. (CORRECT)
+#Function that extracts the message from a PNG image and returns the message.
 
 def extractMessage(imageNameString):
 
     imagePixels = []
     lsbList = []
     newLsbList = []
-    lsbString = ""
     newList = []
+
+    lsbString = ""
     message = ""
 
     if not _isValidImageFile(imageNameString):
@@ -459,7 +453,6 @@ def extractMessage(imageNameString):
     print("Extracting LSB from pixels...")
 
     lsbList = _getLsbFromPixels(imagePixels)
-    #newLsbList = _createTripleBitPairs(lsbList)
 
     lsbString = _placeElementsToString(lsbList)
 
