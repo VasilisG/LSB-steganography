@@ -182,8 +182,6 @@ def _insertBitsToPixels(binaryList, pixelList):
         currentPixel[1] = _rgbToBinary(currentPixel[1])
         currentPixel[2] = _rgbToBinary(currentPixel[2])
 
-        #print("Current pixel(binary): ", currentPixel)
-
         _insertBit(currentPixel[0], bin[0])
         _insertBit(currentPixel[1], bin[1])
         _insertBit(currentPixel[2], bin[2])
@@ -245,46 +243,6 @@ def _getLsbFromPixels(pixelList):
 
 
 
-#Function that checks if we reached the end of reading bits. [NOT USED]
-
-def _isEndingSequence(binaryOctet):
-
-    for i in range(0,len(binaryOctet)):
-
-        if binaryOctet[i] == 1: return False;
-
-    return True
-
-
-
-#Function that creates octets of the elements of the input list and returns a new list as output. [NOT USED]
-
-def _createOctets(lsbList):
-
-    count = 0
-    tempList = []
-    octetList = []
-
-    for i in lsbList:
-
-        tempList.append(i)
-
-        count += 1
-
-        if count % 8 == 0 and not count == 0:
-
-            if _isEndingSequence(tempList): break;
-
-            else:
-                octetList.append(list(tempList))
-                tempList.clear()
-
-            count = 0
-
-    return octetList
-
-
-
 #Function that splits a string every 8 characters and returns a list of strings.
 
 def _splitString(inputString):
@@ -303,30 +261,6 @@ def _splitString(inputString):
 
 
     return tempList
-
-
-
-#Function that gets the message from the binary list, converts it to ASCII and stores it to a string. [NOT USED]
-
-def _getMessage(binaryList):
-
-    tempList = []
-    number = 0
-    count = 0
-    message = ""
-
-    tempList = _createOctets(binaryList)
-
-    for element in tempList:
-
-        number = int(_binaryToDecimal(element))
-
-        if number > 127: number = int(number / 2)
-
-        message += str(chr(number))
-
-
-    return message
 
 
 
@@ -381,7 +315,7 @@ def _isValidImageFile(imageNameString):
  #Function that embeds a message in a JPG or a PNG image and return a new PNG image with the embedded message.
 
 
-def embedMessage(imageNameString, stegoNameString, message):
+def embedMessage(imagePathName, stegoPathName, message):
 
     aList = []
     bList = []
@@ -390,23 +324,23 @@ def embedMessage(imageNameString, stegoNameString, message):
     pixels = []
     pixelTuple = ()
 
-    if not _isValidImageFile(imageNameString):
+    if not _isValidImageFile(imagePathName):
 
         print("Invalid image file format. Try using JPG or PNG instead.")
         return None
 
     try:
-        image = Image.open(imageNameString)
+        image = Image.open(imagePathName)
         print("Loaded image")
 
     except IOError:
-        print("There was an error occured in opening image %s. Check if path name is correct." % (imageNameString))
+        print("There was an error occured in opening image %s. Check if path name is correct." % (imagePathName))
 
     aList = _toAscii(message)
     bList = _toBinary(aList)
     cList = _createTripleBitPairs(bList)
 
-    pixels = list(image.getdata())
+    pixels = _getImagePixels(image)
 
     _insertBitsToPixels(cList, pixels)
 
@@ -415,8 +349,8 @@ def embedMessage(imageNameString, stegoNameString, message):
     stegoImage = Image.new("RGB", image.size)
     print("New image created.")
     stegoImage.putdata(pixelTuple)
-    print("Storing LSBs...")
-    stegoImage.save(stegoNameString)
+    print("Stored pixels to new image.")
+    stegoImage.save(stegoPathName)
     print("Image saved.")
 
     return stegoImage
@@ -425,7 +359,7 @@ def embedMessage(imageNameString, stegoNameString, message):
 
 #Function that extracts the message from a PNG image and returns the message.
 
-def extractMessage(imageNameString):
+def extractMessage(imagePathName):
 
     imagePixels = []
     lsbList = []
@@ -435,20 +369,20 @@ def extractMessage(imageNameString):
     lsbString = ""
     message = ""
 
-    if not _isValidImageFile(imageNameString):
+    if not _isValidImageFile(imagePathName):
 
         print("Invalid image file extension. Try using JPG or PNG instead.")
         return ""
 
     try:
-        image = Image.open(imageNameString)
+        image = Image.open(imagePathName)
         print("Loaded image.") 
 
     except IOError:
-        print("There was an error occured in opening image %s. Check if path name is correct." % (imageNameString))
+        print("There was an error occured in opening image %s. Check if path name is correct." % (imagePathName))
 
 
-    imagePixels = list(image.getdata())
+    imagePixels = _getImagePixels(image)
 
     print("Extracting LSB from pixels...")
 
