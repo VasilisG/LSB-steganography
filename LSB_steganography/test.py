@@ -5,11 +5,8 @@ message = "This is a test message to be embedded in an image."
 imageName = "stars_background.jpg"
 stegoImageName = "stego_stars_background.png"
 
-imageWorkingDirectory = os.getcwd()
-imageWorkingDirectory = workingDirectory + "\\" + imageName
-
-stegoImageWorkingDirectory = os.getcwd()
-stegoImageWorkingDirectory = stegoImageWorkingDirectory + "\\" + stegoImageName
+imageWorkingDirectory = os.getcwd() + "\\" + imageName
+stegoImageWorkingDirectory = ps.getcwd() + "\\" + stegoImageName
 
 lsbSteg.embedMessage(imageWorkingDirectory, stegoImageWorkingDirectory, message)
 
