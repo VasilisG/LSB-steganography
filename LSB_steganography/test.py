@@ -9,7 +9,7 @@ imageWorkingDirectory = os.getcwd()
 imageWorkingDirectory = workingDirectory + "\\" + imageName
 
 stegoImageWorkingDirectory = os.getcwd()
-stegoImageWorkingDirectory = stehoImageWorkingDirectory + "\\" + stegoImageName
+stegoImageWorkingDirectory = stegoImageWorkingDirectory + "\\" + stegoImageName
 
 lsbSteg.embedMessage(imageWorkingDirectory, stegoImageWorkingDirectory, message)
 
