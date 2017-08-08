@@ -8,8 +8,8 @@ stegoImageName = "stego_stars_background.png"
 imageWorkingDirectory = os.getcwd() + "\\" + imageName
 stegoImageWorkingDirectory = ps.getcwd() + "\\" + stegoImageName
 
-lsbSteg.embedMessage(imageWorkingDirectory, stegoImageWorkingDirectory, message)
+LsbSteg.embedMessage(imageWorkingDirectory, stegoImageWorkingDirectory, message)
 
-stegoMessage = lsbSteg.extractMessage(stegoImageWorkingDirectory)
+stegoMessage = LsbSteg.extractMessage(stegoImageWorkingDirectory)
 
 print(stegoMessage)
