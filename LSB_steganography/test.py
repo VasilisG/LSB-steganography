@@ -1,5 +1,5 @@
 import os
-import lsbSteg
+import LsbSteg
 
 message = "This is a test message to be embedded in an image."
 imageName = "stars_background.jpg"
