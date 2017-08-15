@@ -6,7 +6,7 @@ imageName = "stars_background.jpg"
 stegoImageName = "stego_stars_background.png"
 
 imageWorkingDirectory = os.getcwd() + "\\" + imageName
-stegoImageWorkingDirectory = ps.getcwd() + "\\" + stegoImageName
+stegoImageWorkingDirectory = os.getcwd() + "\\" + stegoImageName
 
 LsbSteg.embedMessage(imageWorkingDirectory, stegoImageWorkingDirectory, message)
 
