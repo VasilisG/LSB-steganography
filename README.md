@@ -1,7 +1,7 @@
 # LSB-steganography
 
 This is a Python module which facilitates text hiding in an image, using the LSB technique. 
-It was made using Python 3.4.2 and the PIL image processing library. 
+It was made using Python 3.4.2 and the [Pillow](https://pillow.readthedocs.io/en/5.2.x/) image processing library. 
 It works with JPEG and PNG formats for the cover image and always creates PNG stego image due to its lossless compression.
 
 The input message is converted to binary form and a binary ending sequence is attached along with the message to signal its end.
