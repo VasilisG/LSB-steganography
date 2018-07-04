@@ -1,15 +1,14 @@
-import os
 import LsbSteg
 
-message = "This is a test message to be embedded in an image."
-imageName = "stars_background.jpg"
-stegoImageName = "stego_stars_background.png"
+message = "This is a hidden text in an image"
 
-imageWorkingDirectory = os.getcwd() + "\\" + imageName
-stegoImageWorkingDirectory = os.getcwd() + "\\" + stegoImageName
+imageFilename = "stars_background.jpg"
+newImageFilename = "stego_stars_background"
 
-LsbSteg.embedMessage(imageWorkingDirectory, stegoImageWorkingDirectory, message)
+newImg = encodeLSB(message, imageFilename, newImageFilename)
+if not newImg is None:
+        print("Stego image created.")
 
-stegoMessage = LsbSteg.extractMessage(stegoImageWorkingDirectory)
-
-print(stegoMessage)
+print("Decoding...")
+message = decodeLSB("stego_stars_background.png")
+print("Final message: ", message)
